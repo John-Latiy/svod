@@ -1,0 +1,28 @@
+# Файл .env с токеном и конфиденциальными настройками
+.env
+
+# База данных
+*.db
+
+# Файлы виртуального окружения
+.venv/
+venv/
+
+# Логи и временные файлы
+*.log
+*.tmp
+__pycache__/
+*.pyc
+*.pyo
+
+# Файлы IDE и редакторов
+.idea/
+.vscode/
+*.sublime-workspace
+*.sublime-project
+.DS_Store
+
+# Специфичные файлы, например, с учетными данными почты или другим конфиденциальным содержимым
+credentials.json
+config.yaml
+secret_config/
