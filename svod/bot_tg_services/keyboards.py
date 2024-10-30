@@ -1,17 +1,20 @@
 from telebot import types
 
 def get_main_menu():
-    # Главное меню с кнопками, которые остаются внизу экрана
+    # Главное меню с кнопками
     markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
     
     btn_site = types.KeyboardButton("Посетить сайт")
     btn_cb_registry = types.KeyboardButton("ЕРИС ЦБ РФ")
     btn_instagram = types.KeyboardButton("Перейти в Instagram")
     btn_amix = types.KeyboardButton("Посетить сайт СРО АМИКС")
+    btn_services = types.KeyboardButton("Услуги")  # Кнопка "Услуги"
     
-    # Добавляем кнопки, как указано
+    # Добавляем кнопки
     markup.row(btn_site, btn_cb_registry)
     markup.row(btn_instagram, btn_amix)
+    markup.add(btn_services)
+    
     return markup
 
 def get_services_menu():
