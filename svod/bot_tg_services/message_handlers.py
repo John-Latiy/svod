@@ -36,7 +36,7 @@ def init_handlers(bot):
     def handle_instagram(message):
         bot.send_message(
             message.chat.id,
-            "[➡️instagram](https://www.instagram.com/evgeniy_latiy/profilecard/?igsh=YTdzNzJvZGNvNDAw)",
+            "[➡️instagram⬅️](https://www.instagram.com/evgeniy_latiy/profilecard/?igsh=YTdzNzJvZGNvNDAw)",
             parse_mode="Markdown"
         )
 
@@ -73,26 +73,42 @@ def init_handlers(bot):
     ])
     def handle_service_choice(message):
         service = message.text
-        bot.send_message(message.chat.id, f"Вы выбрали: {service}. Пожалуйста, заполните анкету.")
+        # Убираем клавиатуру "Услуги"
+        bot.send_message(message.chat.id, f"Вы выбрали: {service}. Пожалуйста, заполните анкету.", reply_markup=types.ReplyKeyboardRemove())
+
+        # Кнопка "Возврат в главное меню"
+        markup = types.ReplyKeyboardMarkup(resize_keyboard=True)
+        markup.add(types.KeyboardButton("Вернуться на главное меню"))
+        bot.send_message(message.chat.id, "Если хотите вернуться, нажмите кнопку ниже:", reply_markup=markup)
+
+        # Начинаем анкетирование
         msg = bot.send_message(message.chat.id, "Введите ваше ФИО:")
         bot.register_next_step_handler(msg, get_full_name, service)
 
     def get_full_name(message, service):
+        if message.text == "Вернуться на главное меню":
+            return handle_start(message)
         full_name = message.text
         msg = bot.send_message(message.chat.id, "Введите ваш телефон:")
         bot.register_next_step_handler(msg, get_phone, service, full_name)
 
     def get_phone(message, service, full_name):
+        if message.text == "Вернуться на главное меню":
+            return handle_start(message)
         phone = message.text
         msg = bot.send_message(message.chat.id, "Введите ваш email:")
         bot.register_next_step_handler(msg, get_email, service, full_name, phone)
 
     def get_email(message, service, full_name, phone):
+        if message.text == "Вернуться на главное меню":
+            return handle_start(message)
         email = message.text
-        msg = bot.send_message(message.chat.id, "Укажите ваш город:")
+        msg = bot.send_message(message.chat.id, "Укажите ваш часовой пояс:")
         bot.register_next_step_handler(msg, complete_form, service, full_name, phone, email)
 
     def complete_form(message, service, full_name, phone, email):
+        if message.text == "Вернуться на главное меню":
+            return handle_start(message)
         timezone = message.text
         user_id = message.from_user.id
         username = message.from_user.username
@@ -103,7 +119,7 @@ def init_handlers(bot):
         # Сообщение о завершении анкеты перед отправкой email
         bot.send_message(
             message.chat.id,
-            "Спасибо за заполнение анкеты! Я свяжусь с вами в ближайшее время.\nС уважением!\nинвестиционный советник Латий Евгений Андреевич\nТелефон: +7 964 444 75 57\n Email: evgenii_latii@prostockexchange.ru\n"
+            "Спасибо за заполнение анкеты! Я свяжусь с вами в ближайшее время.\nС уважением!\nЛатий Евгений Андреевич\n\nНажмите кнопку, чтобы вернуться в главное меню."
         )
 
         # Отправка email в фоне
