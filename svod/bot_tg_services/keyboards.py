@@ -8,7 +8,7 @@ def get_main_menu():
     btn_cb_registry = types.KeyboardButton("ЕРИС ЦБ РФ")
     btn_instagram = types.KeyboardButton("Перейти в Instagram")
     btn_amix = types.KeyboardButton("Посетить сайт СРО АМИКС")
-    btn_services = types.KeyboardButton("Услуги")  # Кнопка "Услуги"
+    btn_services = types.KeyboardButton("Выбрать услугу")  # Кнопка "Услуги"
     
     # Добавляем кнопки
     markup.row(btn_site, btn_cb_registry)

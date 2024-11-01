@@ -48,7 +48,7 @@ def init_handlers(bot):
         )
 
     # Обработчик кнопки "Услуги"
-    @bot.message_handler(func=lambda message: message.text == "Услуги")
+    @bot.message_handler(func=lambda message: message.text == "Выбрать услугу")
     def handle_services(message):
         markup = get_services_menu()
         bot.send_message(
@@ -103,7 +103,7 @@ def init_handlers(bot):
         if message.text == "Вернуться на главное меню":
             return handle_start(message)
         email = message.text
-        msg = bot.send_message(message.chat.id, "Укажите ваш часовой пояс:")
+        msg = bot.send_message(message.chat.id, "Укажите ваш населенный пункт:")
         bot.register_next_step_handler(msg, complete_form, service, full_name, phone, email)
 
     def complete_form(message, service, full_name, phone, email):
