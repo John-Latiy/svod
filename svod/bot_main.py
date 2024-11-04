@@ -1,20 +1,17 @@
+import os
+from dotenv import load_dotenv
 from telebot import TeleBot
 from bot_tg_services.message_handlers import init_handlers
-from dotenv import load_dotenv
-import os
 
 # Загружаем переменные окружения
 load_dotenv()
 
-# Получаем токен из .env
-TOKEN = os.getenv("TOKEN")
+# Инициализируем бота
+bot_token = os.getenv('BOT_TOKEN')
+bot = TeleBot(bot_token)
 
-# Создаем экземпляр бота
-bot = TeleBot(TOKEN)
-
-# Инициализируем обработчики сообщений
+# Инициализируем обработчики
 init_handlers(bot)
 
-if __name__ == "__main__":
-    print("Бот запущен.")
-    bot.polling(none_stop=True)
+# Запуск бота
+bot.polling(none_stop=True)
